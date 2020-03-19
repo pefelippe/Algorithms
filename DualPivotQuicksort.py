@@ -51,9 +51,11 @@ def DualPivotPartition(lista, posIni, posFinal):
 				elemE +=1
 
 		atual += 1
-
-	swap(lista, p_esq, elemE-1) # troca pela ultima posicao com elementos menores que p_esq
-	swap(lista, p_dir, elemD+1) # troca pela ultima posicao com elementos maiores que p_dir
+	
+	elemE -= 1
+	elemD += 1
+	swap(lista, p_esq, elemE) # troca pela ultima posicao com elementos menores que p_esq
+	swap(lista, p_dir, elemD) # troca pela ultima posicao com elementos maiores que p_dir
 
 	return elemE, elemD
 
