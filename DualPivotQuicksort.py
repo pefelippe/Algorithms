@@ -18,15 +18,7 @@ def DualPivotQuick(lista, posIni, posFinal):
 		DualPivotQuick(lista, K2+1, posFinal)
 
 def DualPivotPartition(lista, posIni, posFinal):
-	# na verdade, nao esta fucionando mt bem.
-	# ideia: 1) colocar todos os elementos < que p_esq no comeco da lista
-	#		 2) colocar todos os elementos >= que p_dir no final da lista
-	#		 3) trocar de posicao p_esq pelo ultimo elemento menor que ele 
-	#		 4) trocar de posicao p_dir pelo ultimo elemento maior que ele
-
-	#if (lista[posIni] > lista[posFinal]): 
-	#	swap(lista, posIni, posFinal)
-
+	
 	p_esq = posIni			# pos. pivo esquerda
 	p_dir = posFinal		# pos. pivo direita
 	atual = posIni + 1		# pos. do elemento atual	
