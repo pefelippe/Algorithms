@@ -1,5 +1,3 @@
-import random
-
 def Swap(v, i, j):
 	aux = v[i]
 	v[i] = v[j]
@@ -8,6 +6,7 @@ def Swap(v, i, j):
 def Mergesort(v):
 	mergesort(v, 0, len(v) - 1)
 	print(v)
+	
 def mergesort(v, i, n):
 	if (i >= n): return
 
