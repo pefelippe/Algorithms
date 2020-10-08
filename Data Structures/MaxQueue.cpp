@@ -42,6 +42,5 @@ bool enfilar (FilaMaximo<T> &F, T e)
 
 int main(int argc, char const *argv[])
 {
-	
 	return 0;
 }
