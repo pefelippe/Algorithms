@@ -17,8 +17,7 @@ def fib(N):
 
 N = int(input("N: "))
 fib = fib(N)
-print(fib)
-
+print(fib[N])
 
 # O(n)
 
