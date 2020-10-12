@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <string.h>
 
-
 void inicializar (Lista **l) {
 	*l = NULL;
 }
