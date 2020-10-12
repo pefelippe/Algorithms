@@ -1,4 +1,5 @@
 import sys
+
 sys.path.insert(0, './lib')
 
 from Graph import *
@@ -7,40 +8,50 @@ import heapq
 
 from collections import OrderedDict
 
-def createHeap(G, S): # deve retornar 
-    print("Creating Heap")
-
-def extractMin(G, V): # deve retornar um vertice
-    print("Extracting")
+def createHeap(G): # nlogn (i guess)
+    sorted_x = sorted(G.vert_dict.items(), key = lambda x:
+                                                G.get_vertice_by_id(x[0]).distance) # sort the "vert_dict" by vertex distance
     
-def relax(u, v):
-    print("Relaxing")
+    return OrderedDict(sorted_x)
+
+def extractMin(G, D): 
+    vertex = D.popitem(last=False)
+    u = G.get_vertice_by_id(vertex[0])
+    return u, D
+    
+def relaxEdge(u, v):
     distanceU = u.get_distance()
     distanceV = v.get_distance()
     w = u.get_weight(v)
+    
+    if (distanceU + w < distanceV):
+        v.set_distance(int(distanceU) + int(w))
+        v.set_previous(u)
 
-    if (distanceU > distanceV + w):
-        u.set_distance(distanceV)
-        u.set_previous(v)
+    
+def mantemHeap(S):
+    print('actualize heap')
 
 def printSolution(S):
-    print("RESULTS")
+    print("DJIKSTRA ALGORITHM")
     for i in S:
-        print(f'{i.id} - {i.distance}') 
-
+        print('----------------------------------------------')
+        print(f' Vertex: |{i.id}| - Distance from source: |{i.distance}|') 
+    
+    print('----------------------------------------------')
+    
 def dijkstra(G, s):
-    print ("Dijkstra's shortest path")
     s.distance = 0
     S = {}
     S[s] = s
-    Q = createHeap(G)
+    Q = createHeap(G) 
     
     while (len(Q) > 1):
-        u = extractMin(Q)
+        u, Q = extractMin(G, Q)
         S[u] = u
-        for neighbour in u.neighbours:
-            relax(u, neighbour)
-        actualizeHeap(Q)
+        for neighbour in u.get_neighbors():
+            relaxEdge(u, neighbour)
+        
     printSolution(S)
 
 if __name__ == '__main__':
@@ -55,7 +66,7 @@ if __name__ == '__main__':
     f = g.add_vertex('f')
 
     g.add_edge(a, b, 7)  
-    g.add_edge(a, c, 9)
+    g.add_edge(a, b, 6)
     g.add_edge(a, f, 14)
     g.add_edge(b, c, 10)
     g.add_edge(b, d, 15)
@@ -64,4 +75,4 @@ if __name__ == '__main__':
     g.add_edge(d, e, 6)
     g.add_edge(e, f, 9)
 
-    d = dijkstra(g, a)
+    dijkstra(g, a)
