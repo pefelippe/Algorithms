@@ -22,13 +22,16 @@ class Graph():
     def __init__(self):
         self.vert_dict = {}
         self.num_vertices = 0
+        self.edges_list = []
 
     def addVertex(self, v):
         vertex = Vertex(v)
         self.vert_dict[v] = vertex
+        self.num_vertices = self.num_vertices + 1
         return vertex
 
     def addEdge(self, i, f, w=0):
+        self.edges_list.append([i, f, w])
         i.edges.append([i, f, w])
 
     def getVertexById(self, id):
