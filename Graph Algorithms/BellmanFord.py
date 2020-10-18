@@ -1,26 +1,8 @@
-import sys
-
-sys.path.insert(0, './lib')
-
 from Graph import *
 
-from collections import OrderedDict
-#
-def createHeap(G): # nlogn (i guess)
-    sorted_x = sorted(G.vert_dict.items(), key = lambda x:
-                                                G.getVertexById(x[0]).getDistance()) # sort the "vert_dict" by vertex distance
-    
-    return OrderedDict(sorted_x)
-
-def extractMin(G, D): 
-    vertex = D.popitem(last=False)
-    u = G.getVertexById(vertex[0])
-    return u, D
-    
 def relaxEdge(G, edge):
     
     u,v,w = edge
-    
     u = G.getVertexById(u.getId())
     v = G.getVertexById(v.getId())
     
@@ -31,26 +13,29 @@ def relaxEdge(G, edge):
         v.setDistance(distanceU + w)
 
 def printSolution(S):
-
-    for i in S:
+    for v in S.vert_dict:
+        i = S.getVertexById(v)
         print('----------------------------------------------')
         print(f' Vertex: |{i.getId()}| - Distance from source: |{i.getDistance()}|') 
     print('----------------------------------------------')
-    
-def dijkstra(G, s):
-    print("Djikstra's shortest path")
+
+def bellmanFord(G, s):
+    print("Bellman-Ford's shortest path")
     s.setDistance(0)
-    S = {}
-    S[s] = s
-    Q = createHeap(G) 
-    
-    while (len(Q) > 1):
-        u, Q = extractMin(G, Q)
-        S[u] = u
-        for edge in u.getEdges():
+    i = 0
+    while(i < (G.num_vertices)):
+        for edge in G.edges_list:
             relaxEdge(G, edge)
-        
-    printSolution(S)
+        i = i + 1
+    
+    for edge in G.edges_list:
+        u,v,w = edge
+        if (v.getDistance() > u.getDistance() + w):
+            print("NEGATIVE CYCLE")
+            return False
+
+    printSolution(G)
+    return True
 
 if __name__ == '__main__':
 
@@ -73,4 +58,4 @@ if __name__ == '__main__':
     g.addEdge(d, e, 6)
     g.addEdge(e, f, 9)
 
-    dijkstra(g, a)
+    bellmanFord(g, a)
